@@ -1,0 +1,111 @@
+###
+GET https://prpotracker.azurewebsites.net/Products/GetProducts?size=30&page=2
+X-API-Version: 2.0
+
+
+###
+GET https://localhost:5001/Products/GetProducts?size=30&page=2
+X-API-Version: 2.0
+
+
+###
+GET https://localhost:5001/Products/GetProduct/31
+X-API-Version: 2.0
+
+###
+POST https://localhost:5001/Products/NewProduct
+Content-Type: application/json
+X-API-Version: 2.0
+
+{
+  "sku": "Smoothies",
+  "name": "Mango Smoothie",
+  "description": "Super cool mango smoothie!",
+  "price": 16.8,
+  "isAvailable": true,
+  "categoryId": 3
+}
+
+
+
+###
+PATCH https://localhost:5001/Products/UpdateProduct/34
+Content-Type: application/json
+
+[{
+"op": "replace",
+"path": "/name",
+"value": "Mango Punch"
+}]
+
+
+###
+PATCH https://localhost:5001/Products/UpdateProduct/31
+Content-Type: application/json
+
+[{
+"op": "add",
+"path": "/description",
+"value": "B vitamins are a class of water-soluble vitamins that play important roles in cell metabolism"
+}]
+
+
+###
+DELETE https://localhost:5001/Products/DeleteProduct/34
+
+
+
+###
+GET https://localhost:5001/DemoDI/GetInstances
+
+
+
+###
+GET https://localhost:5001/v1.0/Products/GetProducts?size=30&page=2
+
+
+###
+GET https://localhost:5001/v1.0/Products/GetProduct/31
+
+
+###
+POST https://localhost:5001/v1.0/Products/NewProduct
+Content-Type: application/json
+
+{
+  "sku": "Smoothies",
+  "name": "Mango Smoothie",
+  "description": "Super cool mango smoothie!",
+  "price": 16.8,
+  "isAvailable": true,
+  "categoryId": 3
+}
+
+
+
+###
+PATCH https://localhost:5001/v1.0/Products/UpdateProduct/34
+Content-Type: application/json
+
+[{
+"op": "replace",
+"path": "/name",
+"value": "Mango Punch"
+}]
+
+
+###
+PATCH https://localhost:5001/v1.0/Products/UpdateProduct/31
+Content-Type: application/json
+
+[{
+"op": "add",
+"path": "/description",
+"value": "B vitamins are a class of water-soluble vitamins that play important roles in cell metabolism"
+}]
+
+
+###
+DELETE https://localhost:5001/v1.0/Products/DeleteProduct/34
+
+

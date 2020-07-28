@@ -1,0 +1,13 @@
+#igonre .metals & .vscode
+.vscode
+.metals
+
+#ignore logs 
+logs
+
+#ignore obj and bin files
+bin
+obj
+
+#igonore publish files
+publish
