@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using WebAPI3_1.Utils;
 
 namespace WebAPI3_1.Controllers
 {
+    [Authorize]
     [ApiController]
     [ApiVersion("1.0")]
     //[Route("[controller]/[action]")]
