@@ -1,4 +1,6 @@
-using System;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Serilog;
 using WebAPI3_1.Models;
@@ -27,6 +30,22 @@ namespace WebAPI3_1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
+                    .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
+
+            services.Configure<JwtBearerOptions>(AzureADDefaults.JwtBearerAuthenticationScheme, options =>
+            {
+                options.Authority = $"{Configuration.GetValue<string>("AzureAd:Instance")}{Configuration.GetValue<string>("AzureAd:TenantId")}";
+                options.Audience = Configuration.GetValue<string>("AzureAd:Audience");
+
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    //ValidIssuer = Configuration.GetValue<string>("AzureAd:Issuer"),
+                    ValidAudience = Configuration.GetValue<string>("AzureAd:Audience"),
+                    ValidateIssuer = false,
+                };
+            });
 
             services.AddTransient<IOperationTransient, Operation>();
             services.AddScoped<IOperationScoped, Operation>();
@@ -60,9 +79,10 @@ namespace WebAPI3_1
             {
                 options.AddDefaultPolicy(builder =>
                 {
+                    //TODO
                     builder.WithOrigins("http://localhost:4200")
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
+                           .AllowAnyHeader()
+                           .AllowAnyMethod();
                 });
             });
 
@@ -82,9 +102,11 @@ namespace WebAPI3_1
 
             app.UseRouting();
 
-            app.UseCors();
+            app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {

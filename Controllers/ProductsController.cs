@@ -96,7 +96,7 @@ namespace WebAPI3_1.Controllers
                 return NotFound();
 
             _shopContext.Remove(productToDelete);
-           int result =  _shopContext.SaveChanges();
+            int result = _shopContext.SaveChanges();
 
             return NoContent();
         }
@@ -106,7 +106,9 @@ namespace WebAPI3_1.Controllers
     // version two of Prdoucts controller
     //here we are reading version from header
 
+
     [ApiController]
+    [Authorize]
     [ApiVersion("2.0")]
     //[Route("[controller]/[action]")]
     [Route("products/[action]")]
@@ -193,7 +195,7 @@ namespace WebAPI3_1.Controllers
                 return NotFound();
 
             _shopContext.Remove(productToDelete);
-           int result =  _shopContext.SaveChanges();
+            int result = _shopContext.SaveChanges();
 
             return NoContent();
         }
