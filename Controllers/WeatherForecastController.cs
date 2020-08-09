@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace WebAPI3_1.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]/[action]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -23,7 +23,7 @@ namespace WebAPI3_1.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<WeatherForecast> GetWeatherForecasts()
         {
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
@@ -33,6 +33,7 @@ namespace WebAPI3_1.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+            //throw new Exception("My new execption");
         }
     }
 }
