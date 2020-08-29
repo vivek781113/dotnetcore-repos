@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using WebAPI3_1.Filters;
 
 namespace WebAPI3_1.Controllers
 {
@@ -22,9 +23,15 @@ namespace WebAPI3_1.Controllers
             _logger = logger;
         }
 
+
+        [AddHeaderAttribute("Name", "Vivek Kumar Tiwary")]
+        [WeatherActionFilterAttribute("X_CustomHeader", "CutomHeader value")]
         [HttpGet]
+        
         public IEnumerable<WeatherForecast> GetWeatherForecasts()
         {
+            var header = HttpContext.Request.Headers.TryGetValue("X_CUSTOM", out var X_CustomHeader);
+            _logger.LogInformation($"header value from action filter attribute {X_CustomHeader}");
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

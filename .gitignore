@@ -1,6 +1,7 @@
 #igonre .metals & .vscode
 .vscode
 .metals
+.vs
 
 #ignore logs 
 logs

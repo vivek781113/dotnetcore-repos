@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -107,12 +108,12 @@ namespace WebAPI3_1.Controllers
     //here we are reading version from header
 
 
-    [ApiController]
     [Authorize]
     [ApiVersion("2.0")]
     //[Route("[controller]/[action]")]
+    [EnableCors("_myAllowSpecificOrigins")]
     [Route("products/[action]")]
-    //[Route("v{v:apiVersion}/products/[action]")]
+    [ApiController]
     public class ProductsV2_0Controller : ControllerBase
     {
         private readonly ShopContext _shopContext;

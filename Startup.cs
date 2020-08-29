@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Serilog;
+using WebAPI3_1.CustomMiddleware;
 using WebAPI3_1.Models;
 using WebAPI3_1.Services.Implementations;
 using WebAPI3_1.Services.Interfaces;
@@ -20,6 +21,8 @@ namespace WebAPI3_1
 {
     public class Startup
     {
+
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -55,6 +58,16 @@ namespace WebAPI3_1
                 options.UseInMemoryDatabase("Shop")
             );
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                        builder =>
+                        {
+                            builder.WithOrigins("http://localhost:4200/", "https://ngazwebapp.azurewebsites.net/")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                        });
+            });
 
             services.AddControllers()
                     .AddNewtonsoftJson(options =>
@@ -75,17 +88,6 @@ namespace WebAPI3_1
                 options.ApiVersionReader = new HeaderApiVersionReader("X-API-Version");
             });
 
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(builder =>
-                {
-                    //TODO
-                    builder.WithOrigins("http://localhost:4200")
-                           .AllowAnyHeader()
-                           .AllowAnyMethod();
-                });
-            });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -102,9 +104,19 @@ namespace WebAPI3_1
 
             app.UseSerilogRequestLogging();
 
+            /*Builtin & custom middleware for excption handling */
+            app.ConfigureExceptionHandler();
+
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            /*
+            Calls the UseCors extension method and specifies the _myAllowSpecificOrigins CORS policy. UseCors adds the CORS middleware. The call to UseCors must be placed after UseRouting, but before UseAuthorization. For more information, see Middleware order.
+            */
+            app.UseCors(MyAllowSpecificOrigins);
+
 
             app.UseAuthentication();
 
