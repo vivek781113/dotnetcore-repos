@@ -1,5 +1,9 @@
 ###
-GET https://localhost:5001/api/WeatherForecast/GetWeatherForecasts
+GET https://localhost:32770/api/WeatherForecast/GetWeatherForecasts
+
+
+###
+GET https://thintankcoreapi.azurewebsites.net/api/WeatherForecast/GetWeatherForecasts
 
 
 

@@ -107,8 +107,8 @@ namespace WebAPI3_1
             /*Builtin & custom middleware for excption handling */
             app.ConfigureExceptionHandler();
 
-
-            app.UseHttpsRedirection();
+            ///*Commented out if we are running under docker */
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

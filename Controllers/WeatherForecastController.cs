@@ -30,6 +30,7 @@ namespace WebAPI3_1.Controllers
         
         public IEnumerable<WeatherForecast> GetWeatherForecasts()
         {
+            var dockerImageId = Environment.MachineName;  
             var header = HttpContext.Request.Headers.TryGetValue("X_CUSTOM", out var X_CustomHeader);
             _logger.LogInformation($"header value from action filter attribute {X_CustomHeader}");
             var rng = new Random();
@@ -37,7 +38,8 @@ namespace WebAPI3_1.Controllers
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
+                Summary = Summaries[rng.Next(Summaries.Length)],
+                ExtraInfo = $"Docker Image Id is : {Environment.MachineName}"
             })
             .ToArray();
             //throw new Exception("My new execption");
