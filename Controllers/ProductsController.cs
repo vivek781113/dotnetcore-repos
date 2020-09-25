@@ -29,7 +29,8 @@ namespace WebAPI3_1.Controllers
             _logger = logger;
         }
 
-        public void TraceMessage(string message,
+        [NonAction]
+        private void TraceMessage(string message,
                 [CallerMemberName] string memberName = "",
                 [CallerFilePath] string sourceFilePath = "",
                 [CallerLineNumber] int sourceLineNumber = 0)
@@ -126,7 +127,8 @@ namespace WebAPI3_1.Controllers
             _logger = logger;
         }
 
-        public void TraceMessage(string message,
+        [NonAction]
+        private void TraceMessage(string message,
                 [CallerMemberName] string memberName = "",
                 [CallerFilePath] string sourceFilePath = "",
                 [CallerLineNumber] int sourceLineNumber = 0)

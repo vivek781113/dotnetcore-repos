@@ -9,6 +9,7 @@ namespace WebAPI3_1.Controllers
 
     public class ErrorController : ControllerBase
     {
+        [HttpGet]
         [Route("/error-local-development")]
         public IActionResult ErrorLocalDevelopment(
     [FromServices] IWebHostEnvironment webHostEnvironment)
@@ -26,6 +27,7 @@ namespace WebAPI3_1.Controllers
                 title: context.Error.Message);
         }
 
+        [HttpGet]
         [Route("/error")]
         public IActionResult Error() => Problem();
 

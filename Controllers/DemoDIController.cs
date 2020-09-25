@@ -41,6 +41,7 @@ namespace WebAPI3_1.Controllers
             _singletonOperation3 = singletonOperation3;
         }
 
+        [HttpGet]
         public IActionResult GetInstances()
         {
             dynamic result = new ExpandoObject();
