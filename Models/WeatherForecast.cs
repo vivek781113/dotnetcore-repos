@@ -1,6 +1,6 @@
 using System;
 
-namespace WebAPI3_1
+namespace WebAPI3_1.Models
 {
     public class WeatherForecast
     {
@@ -12,6 +12,6 @@ namespace WebAPI3_1
 
         public string Summary { get; set; }
 
-        public string ExtraInfo {get; set;}
+        public string ExtraInfo { get; set; }
     }
 }

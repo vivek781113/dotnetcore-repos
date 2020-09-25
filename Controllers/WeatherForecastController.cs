@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebAPI3_1.Filters;
+using WebAPI3_1.Models;
 
 namespace WebAPI3_1.Controllers
 {

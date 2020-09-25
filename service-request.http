@@ -1,9 +1,16 @@
 ###
-GET https://localhost:32770/api/WeatherForecast/GetWeatherForecasts
+GET http://localhost:32773/api/task/vivek781113
+
+###
+GET https://localhost:32768/api/WeatherForecast/GetWeatherForecasts
 
 
 ###
-GET https://thintankcoreapi.azurewebsites.net/api/WeatherForecast/GetWeatherForecasts
+GET https://localhost/api/WeatherForecast/GetWeatherForecasts
+
+
+###
+GET https://thinktankcoreapi.azurewebsites.net/api/WeatherForecast/GetWeatherForecasts
 
 
 
