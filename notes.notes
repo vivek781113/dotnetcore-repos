@@ -12,7 +12,7 @@ Filters:
                                                                             |    
                                                                             --------------------    
 Filters execution sequence:
-    1. Authorization Filter:
+    1. Authorization Filter: [search for type Filter ()]
     2. Resources Filter:  a.OnResourceExecuting b.OnResourceExecuted [IResourceFilter.OnResourceExecuted(ResourceExecutedContext) Method]
     3. Action Filters:
         a.Run code immediately before and after an action method is called.
@@ -28,3 +28,5 @@ IActionFilter.OnActionExecuting executes before the action method does.
 IResultFilter.OnResultExecuting executes after the action method returns (i.e. calls return View()), but before the ActionResult executes.
 
 In plain English: OnActionExecuting can be used to intervene before the business logic runs. OnResultExecuting can be used to intervene after the business logic runs and before the display logic runs.    
+
+-->1 to 5 comes under controller action invoker

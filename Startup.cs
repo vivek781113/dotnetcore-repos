@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using Polly;
 using Serilog;
 using WebAPI3_1.CustomMiddleware;
 using WebAPI3_1.Models;
@@ -94,6 +96,16 @@ namespace WebAPI3_1
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.ApiVersionReader = new HeaderApiVersionReader("X-API-Version");
             });
+
+            services.AddHttpClient(name: "github", client =>
+            {
+                client.BaseAddress = new Uri(@"https://api.github.com/users/");
+                client.DefaultRequestHeaders.Add("Accept", "application/vnd.github.v3+json");
+                client.DefaultRequestHeaders.Add("User-Agent", "HttpClientFactory-Sample");
+            })
+            .AddTransientHttpErrorPolicy(p =>
+                p.WaitAndRetryAsync(3, _ => TimeSpan.FromMilliseconds(300))
+            );
 
         }
 

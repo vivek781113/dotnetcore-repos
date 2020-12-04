@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using WebAPI3_1.Services.Factory;
+using WebAPI3_1.Services.Implementations;
 
 namespace WebAPI3_1.Controllers
 {
@@ -11,6 +13,8 @@ namespace WebAPI3_1.Controllers
     [Route("api/[controller]")]
     public class TaskController : ControllerBase
     {
+
+        //using client factory will use the underlying httphandlers which has been already established.
         private readonly IHttpClientFactory _clientFactory;
         private readonly ILogger<TaskController> _logger;
 
@@ -25,15 +29,25 @@ namespace WebAPI3_1.Controllers
         {
             try
             {
-                var client = _clientFactory.CreateClient("animal");
-                var animals = await client.GetStringAsync($"entries?category=animals&https=true");
-                var ouput = JsonConvert.DeserializeObject(animals);
+                var client = _clientFactory.CreateClient("github");
+                var githubAccount = await client.GetStringAsync($"{accountName}");
+                var ouput = JsonConvert.DeserializeObject(githubAccount);
                 return Ok(ouput);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+
+
+//factory pattern
+
+        [HttpGet("getOrderCost/{ordCode}")]
+        public double CalculateCost(string ordCode)
+        {
+            var calculator = OrderFactory.GetOrderCalculator(ordCode);
+            return calculator.CalculateOrder(ordCode);
         }
     }
 }
